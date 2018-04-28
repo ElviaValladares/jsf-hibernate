@@ -19,11 +19,13 @@
             <p:dataTable 
                 id="idTabla" 
                 var="registro" 
-                value="#{jugadorController.obtenerRegistros()}"
+                value="#{jugadorController.listaRegistro}"
                 scrollable="true"
                 editable="true"
+                selectionMode="single"
                 selection="#{jugadorController.selectedJugador}"
-                rowKey="#{registro.idJugador}">
+                rowKey="#{registro.idJugador}"
+                emptyMessage="No hay registros">
                 <f:facet name="header">
                     CRUD JSF JUGADOR
                 </f:facet>
@@ -47,6 +49,15 @@
                 </p:column>
                 <p:column headerText="Editar">
                     <p:rowEditor/>
+                </p:column>
+                <p:column headerText="Eliminar">
+                    <p:commandButton value="Eliminar" 
+                                     icon="ui-icon-trash" 
+                                     actionListener="#{jugadorController.eliminarRegistro(registro)}"
+                                     update=":idForm:idTabla"
+                                     ajax="true">
+                        
+                    </p:commandButton>
                 </p:column>
             </p:dataTable> 
         </h:form>
