@@ -48,7 +48,7 @@ Contributor(s):
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.connection.pool_size">1</property>
-    <property name="hbm2ddl.auto">create</property>
+    <property name="hbm2ddl.auto">update</property>
     <mapping class="com.deporte.domain.Jugador"></mapping>
   </session-factory>
 </hibernate-configuration>

@@ -14,6 +14,30 @@
     </h:head>
 
     <h:body>
+        <h:form id="formCreate">
+            <p:growl id="message" showDetail="true" />
+            <p:commandButton 
+                id="btnUsuarioCreate"
+                update=":idForm:idTabla"
+                type="button"
+                title="Crear"                
+                value="Crear" 
+                icon="ui-icon-trash"
+                onclick="PF('dialogUsuarioCreate').show();"
+                ajax="true"/>
+            <p:dialog header="Crear Jugador" widgetVar="dialogUsuarioCreate" resizable="false" 
+                      id="dlgUsuarioCreate" showEffect="fade" hideEffect="explode" modal="true">                                 
+                <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+                    <h:outputText value="Id:"/>
+                    <h:inputText value="#{jugadorController.selectedJugador.idJugador}"/>
+                    <h:outputText value="Nombre:"/>
+                    <h:inputText value="#{jugadorController.selectedJugador.nombre}"/>
+                </h:panelGrid> 
+                
+                <p:commandButton value="Guardar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" actionListener="#{jugadorController.crearRegistro(selectedJugador)}" update=":idForm:idTabla" oncomplete="dialogUsuarioCreate.hide()"  />
+                <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogUsuarioCreate').hide();" />           
+            </p:dialog>
+        </h:form>         
         <h:form id="idForm">
             <p:growl id="msgs" showDetail="true"/>
             <p:dataTable 
@@ -51,13 +75,19 @@
                     <p:rowEditor/>
                 </p:column>
                 <p:column headerText="Eliminar">
+                    <p:growl id="message" showDetail="true" />
                     <p:commandButton value="Eliminar" 
                                      icon="ui-icon-trash" 
                                      actionListener="#{jugadorController.eliminarRegistro(registro)}"
                                      update=":idForm:idTabla"
                                      ajax="true">
-                        
-                    </p:commandButton>
+                        <p:confirm header="Eliminar jugador" message="Estas seguro de elminar el registro?" icon="ui-icon-alert"/>
+                    </p:commandButton> 
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" widgetVar="dialogUsuarioDelete">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" actionListener="#{jugadorController.eliminarRegistro(registro)}" update=":idForm:idTabla" oncomplete="dialogUsuarioDelete.hide()" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="dialogUsuarioDelete.hide()" />
+                    </p:confirmDialog>
+
                 </p:column>
             </p:dataTable> 
         </h:form>
